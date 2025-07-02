@@ -1,0 +1,43 @@
+{
+  "name": "pruebane_back",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "format": "prettier --write src/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Niccolo-BM/PruebaNE_BACK.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Niccolo-BM/PruebaNE_BACK/issues"
+  },
+  "homepage": "https://github.com/Niccolo-BM/PruebaNE_BACK#readme",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.0",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "joi": "^17.13.3",
+    "lodash": "^4.17.21",
+    "mongodb": "^6.17.0",
+    "morgan": "^1.10.0",
+    "mysql2": "^3.14.1"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.0",
+    "eslint": "^9.29.0",
+    "eslint-config-node": "^4.1.0",
+    "nodemon": "^3.1.10",
+    "prettier": "^3.6.2"
+  }
+}

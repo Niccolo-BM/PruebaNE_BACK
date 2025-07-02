@@ -1,0 +1,135 @@
+openapi: 3.0.0
+info:
+  title: PruebaNE API - Notas de Transporte
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000
+paths:
+  /api/v1/notes:
+    get:
+      summary: Listar todas las notas
+      responses:
+        '200':
+          description: Lista de notas obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Note'
+    post:
+      summary: Crear una nueva nota
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewNote'
+      responses:
+        '201':
+          description: Nota creada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+  /api/v1/notes/stats:
+    get:
+      summary: Obtener resumen de estadísticas de notas
+      responses:
+        '200':
+          description: Estadísticas obtenidas exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoteStats'
+  /api/v1/notes/{id}:
+    delete:
+      summary: Eliminar una nota por ID
+      parameters:
+        - name: id
+          in: path
+          description: ID de la nota a eliminar
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Nota eliminada exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                  message:
+                    type: string
+                  timestamp:
+                    type: string
+components:
+  schemas:
+    Note:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum: [recaudo, incidencia, mantenimiento]
+        title:
+          type: string
+        content:
+          type: string
+        route:
+          type: string
+        amount:
+          type: number
+          format: float
+          nullable: true
+          description: Monto con decimales (solo si type es recaudo)
+        date:
+          type: string
+        time:
+          type: string
+      required: [id, type, title, content, route, date, time]
+    NewNote:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [recaudo, incidencia, mantenimiento]
+          description: Tipo de registro (recaudo, incidencia, mantenimiento)
+        title:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Título de la nota (1-100 caracteres)
+        content:
+          type: string
+          minLength: 1
+          description: Descripción detallada de la nota
+        route:
+          type: string
+          minLength: 1
+          description: Ruta asociada a la nota
+        amount:
+          type: number
+          format: float
+          nullable: true
+          description: Monto con decimales (requerido si type es recaudo)
+      required: [type, title, content, route]
+    NoteStats:
+      type: object
+      properties:
+        totalRecaudado:
+          type: integer
+        incidenciasCount:
+          type: integer
+        totalNotes:
+          type: integer
+      required: [totalRecaudado, incidenciasCount, totalNotes]
